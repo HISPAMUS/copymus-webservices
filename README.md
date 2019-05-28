@@ -6,7 +6,7 @@
 ./mvnw clean package -Dmaven.test.skip=true
 ```
 
-- Create `~/copymus/`, `~/copymus/db/`, and `~/copymus/dist/` folders and copy:
+- Create `~/copymus/`, `~/copymus/db/`, `~/copymus/handwritten/`, and `~/copymus/dist/` folders and copy:
 	- `target/copymus-webservices-X.X.X.jar` into `~/copymus/dist/`
 	- `copymus-start.sh` into `~/copymus/`
 - Update symbolic link `~/copymus/copymus-latest` to the latest jar
