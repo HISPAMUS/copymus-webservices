@@ -49,10 +49,10 @@ public class ScoreController {
 	private static final String ANNOTATION_EXISTS = "Score [%s] is already annotated by user [%d]";
 	
 	@Autowired
-	ScoreAssembler scoreAssembler;
+	AnnotationAssembler annotationAssembler;
 	
 	@Autowired
-	AnnotationAssembler annotationAssembler;
+	ScoreAssembler scoreAssembler;
 	
 	@Autowired
 	ScoreRepository scoreRepository;
@@ -77,7 +77,8 @@ public class ScoreController {
 			throw new NotFoundException(String.format(SCORE_ID_NOT_FOUND, scoreId, db));
 		
 		try {
-			return scoreAssembler.getScoreDto(score.get());
+			return scoreAssembler.getBuilder(score.get())
+					.id().title().author().pdf().midi().build();
 		}
 		catch (Exception e) {
 			throw new ErrorException(String.format(SCORE_REPRESENTATION_ERROR, scoreId));
@@ -153,7 +154,8 @@ public class ScoreController {
 			throw new NotFoundException(RANDOM_SCORE_ERROR);
 			
 		try {
-			return scoreAssembler.getScoreDto(score.get());
+			return scoreAssembler.getBuilder(score.get())
+					.id().title().author().pdf().midi().build();
 		}
 		catch (Exception e) {
 			throw new ErrorException(String.format(REPRESENTATION_ERROR, score.get().getId()));

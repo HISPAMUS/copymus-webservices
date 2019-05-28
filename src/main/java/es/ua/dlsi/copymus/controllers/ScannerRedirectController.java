@@ -5,11 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/docs")
-public class SwaggerRedirectController {
+@RequestMapping("/")
+public class ScannerRedirectController {
 
 	@GetMapping
-	protected String redirect() {
-		return "redirect:/swagger-ui/index.html";
+	protected String redirectRoot() {
+		return "redirect:/scanner/index.html";
+	}
+
+	@GetMapping("/scanner")
+	protected String redirectFolder() {
+		return "redirect:/scanner/index.html";
 	}
 }
