@@ -11,6 +11,7 @@ public class AppProperties {
 	private String dbPath;
 	private String databasesPath;
 	private String annotationsPath;
+	private String handwrittenPath;
 	
 	public String getAppPath() {
 		return appPath;
@@ -35,6 +36,12 @@ public class AppProperties {
 	}
 	public void setAnnotationsPath(String annotations) {
 		this.annotationsPath = annotations;
+	}
+	public String getHandwrittenPath() {
+		return handwrittenPath;
+	}
+	public void setHandwrittenPath(String handwrittenPath) {
+		this.handwrittenPath = handwrittenPath;
 	}
 
 }

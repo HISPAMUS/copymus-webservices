@@ -74,4 +74,5 @@ public class AnnotationStorageService {
 		Path path = resolveAnnotationPath(annotation.getScore(), annotation.getUser());
 		return path.resolve(INTERACTIONS).toFile();
 	}
+	
 }

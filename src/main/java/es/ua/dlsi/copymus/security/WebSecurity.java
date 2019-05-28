@@ -23,9 +23,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable();
 		http.headers().frameOptions().disable();
 		http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
-		
+
+		// Allow access to root
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/", "/favicon.ico").permitAll();
+		// Allow access to H2 console
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/h2-console/**").permitAll();
 		// Allow access to Swagger UI and OpenAPI documentation
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/", "/swagger-ui/**", "/api-docs.yaml", "/h2-console/**", "/favicon.ico").permitAll();
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/docs", "/swagger-ui/**", "/api-docs.yaml").permitAll();
+		// Allow access to Handwritten Score Scanner app
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/scanner/**", "/scanner/**").permitAll();
+		http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/scanner/upload").permitAll();
+
 		// Any other entry points are secured with an API key
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new ApiKeySecurityFilter(authenticationManager()));
