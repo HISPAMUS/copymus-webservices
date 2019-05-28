@@ -55,6 +55,9 @@ public class ApiKeySecurityFilter extends BasicAuthenticationFilter {
 		String uri = req.getRequestURI();
 		if (uri.startsWith("/swagger-ui/")
 				|| uri.equals("/")
+				|| uri.startsWith("/api/scanner/")
+				|| uri.startsWith("/scanner/")
+				|| uri.equals("/docs")
 				|| uri.equals("/api-docs.yaml")
 				|| uri.startsWith("/h2-console")
 				|| uri.equals("/favicon.ico")

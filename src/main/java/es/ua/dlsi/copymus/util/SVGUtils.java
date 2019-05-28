@@ -14,6 +14,7 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.PNGTranscoder;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.apache.commons.logging.LogFactory;
 import org.apache.fop.svg.PDFTranscoder;
@@ -53,6 +54,32 @@ public class SVGUtils {
 		transcoder.addTranscodingHint(PDFTranscoder.KEY_WIDTH, (float)rect.getWidth());
 		transcoder.addTranscodingHint(PDFTranscoder.KEY_HEIGHT, (float)rect.getHeight());
 		transcoder.addTranscodingHint(PDFTranscoder.KEY_AOI, rect);
+		
+		TranscoderInput transcoderInput;
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		TranscoderOutput transcoderOutput = new TranscoderOutput(output);
+		byte[] pdf = {};
+		try {
+			transcoderInput = new TranscoderInput(new FileInputStream(new File(svgPath))); 
+			transcoder.transcode(transcoderInput, transcoderOutput);
+			output.flush();
+			pdf = output.toByteArray();
+		} finally {
+			output.close();
+		}
+
+		return pdf;
+	}
+
+	public static byte[] svg2png(String svgPath) throws IOException, TranscoderException {
+		Rectangle2D rect = getBoundingBox(svgPath);
+
+		PNGTranscoder transcoder = new PNGTranscoder();
+		
+		// http://www.nccp.org/lib/batik/docs/rasterizerTutorial.html#selectAreaOfIntrest
+		transcoder.addTranscodingHint(PNGTranscoder.KEY_WIDTH, (float)rect.getWidth());
+		transcoder.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, (float)rect.getHeight());
+		transcoder.addTranscodingHint(PNGTranscoder.KEY_AOI, rect);
 		
 		TranscoderInput transcoderInput;
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
